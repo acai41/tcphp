@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Tcphp\core;
+require_once _SYS_PATH . 'core/Render.php';
 
 
 class PhpRender implements Render

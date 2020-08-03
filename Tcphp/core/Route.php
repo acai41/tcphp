@@ -1,4 +1,5 @@
 <?php
+
 namespace Tcphp\core;
 
 class Route
@@ -89,5 +90,37 @@ class Route
             $route['param'] += $routeQ;
         }
         return $route;
+    }
+
+    public function parseTradition()
+    {
+        $route = [];
+        if (!isset($_GET[$GLOBALS['_config']['UrlGroupName']])) {
+            $_GET[$GLOBALS['_config']['UrlGroupName']] = '';
+        }
+        if (!isset($_GET[$GLOBALS['_config']['UrlControllerName']])) {
+            $_GET[$GLOBALS['_config']['UrlControllerName']] = '';
+        }
+        if (!isset($_GET[$GLOBALS['_config']['UrlActionName']])) {
+            $_GET[$GLOBALS['_config']['UrlActionName']] = '';
+        }
+        $route['group'] = $_GET[$GLOBALS['_config']['UrlGroupName']];
+        $route['controll'] = $_GET[$GLOBALS['_config']['UrlControllerName']];
+        $route['action'] = $_GET[$GLOBALS['_config']['UrlActionName']];
+        unset($_GET[$GLOBALS['_config']['UrlGroupName']]);
+        unset($_GET[$GLOBALS['_config']['UrlControllerName']]);
+        unset($_GET[$GLOBALS['_config']['UrlActionName']]);
+        $route['param']=$_GET;
+        if($route['group']==NULL){
+            $route['group']=$GLOBALS['_config']['defaultApp'];
+        }
+        if($route['controll']==NULL){
+            $route['controll']=$GLOBALS['_config']['defaultController'];
+        }
+        if($route['action']==NULL){
+            $route['action']=$GLOBALS['_config']['defaultAction'];
+        }
+        return $route;
+
     }
 }
